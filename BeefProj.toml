@@ -1,0 +1,10 @@
+FileVersion = 1
+
+[Project]
+Name = "msgpackc-beef"
+TargetType = "BeefLib"
+StartupObject = "msgpackc_beef.Program"
+
+[Configs.Debug.Win64]
+CLibType = "DynamicDebug"
+LibPaths = ["$(ProjectDir)\\libs\\msgpack-c.lib"]

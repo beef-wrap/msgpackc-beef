@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "unpack_define.h": "c",
+        "unpack.h": "c"
+    }
+}
