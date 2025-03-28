@@ -26,7 +26,7 @@ extension msgpackc
 	{
 		function void(void* data) func;
 		void* data;
-	};
+	}
 
 	[CRepr]
 	public struct msgpack_zone_finalizer_array
@@ -42,7 +42,7 @@ extension msgpackc
 	[CRepr]
 	public struct msgpack_zone_chunk_list
 	{
-		uint32 free;
+		uint32_t free;
 		char8* ptr;
 		msgpack_zone_chunk* head;
 	}
@@ -52,21 +52,21 @@ extension msgpackc
 	{
 		msgpack_zone_chunk_list chunk_list;
 		msgpack_zone_finalizer_array finalizer_array;
-		uint32 chunk_size;
+		uint32_t chunk_size;
 	}
 
 #if !MSGPACK_ZONE_CHUNK_SIZE
 	const int MSGPACK_ZONE_CHUNK_SIZE = 8192;
 #endif
 
-	[CLink] public static extern bool msgpack_zone_init(msgpack_zone* zone, uint32 chunk_size);
+	[CLink] public static extern bool msgpack_zone_init(msgpack_zone* zone, uint32_t chunk_size);
 	[CLink] public static extern void msgpack_zone_destroy(msgpack_zone* zone);
 
-	[CLink] public static extern msgpack_zone* msgpack_zone_new(uint32 chunk_size);
+	[CLink] public static extern msgpack_zone* msgpack_zone_new(uint32_t chunk_size);
 	[CLink] public static extern void msgpack_zone_free(msgpack_zone* zone);
 
-	// static inline void* msgpack_zone_malloc(msgpack_zone* zone, uint32 size);
-	// static inline void* msgpack_zone_malloc_no_align(msgpack_zone* zone, uint32 size);
+	// static inline void* msgpack_zone_malloc(msgpack_zone* zone, uint32_t size);
+	// static inline void* msgpack_zone_malloc_no_align(msgpack_zone* zone, uint32_t size);
 
 	// static inline bool msgpack_zone_push_finalizer(msgpack_zone* zone, void (*func)(void* data), void* data);
 
@@ -76,5 +76,5 @@ extension msgpackc
 
 	[CLink] public static extern void msgpack_zone_clear(msgpack_zone* zone);
 
-	[CLink] public static extern void* msgpack_zone_malloc_expand(msgpack_zone* zone, uint32 size);
+	[CLink] public static extern void* msgpack_zone_malloc_expand(msgpack_zone* zone, uint32_t size);
 }

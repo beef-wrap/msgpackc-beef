@@ -28,8 +28,8 @@ extension msgpackc
 	[CRepr]
 	public struct msgpack_vrefbuffer_inner_buffer
 	{
-		uint32 free;
-		char8* ptr;
+		uint32_t free;
+		char* ptr;
 		msgpack_vrefbuffer_chunk* head;
 	}
 
@@ -40,8 +40,8 @@ extension msgpackc
 		msgpack_iovec* end;
 		msgpack_iovec* array;
 
-		uint32 chunk_size;
-		uint32 ref_size;
+		uint32_t chunk_size;
+		uint32_t ref_size;
 
 		msgpack_vrefbuffer_inner_buffer inner_buffer;
 	}
@@ -55,20 +55,20 @@ extension msgpackc
 	const int  MSGPACK_VREFBUFFER_CHUNK_SIZE = 8192;
 #endif
 
-	[CLink] public static extern bool msgpack_vrefbuffer_init(msgpack_vrefbuffer* vbuf, uint32 ref_size, uint32 chunk_size);
+	[CLink] public static extern bool msgpack_vrefbuffer_init(msgpack_vrefbuffer* vbuf, uint32_t ref_size, uint32_t chunk_size);
 	[CLink] public static extern void msgpack_vrefbuffer_destroy(msgpack_vrefbuffer* vbuf);
 
-	// static inline msgpack_vrefbuffer* msgpack_vrefbuffer_new(uint32 ref_size, uint32 chunk_size);
+	// static inline msgpack_vrefbuffer* msgpack_vrefbuffer_new(uint32_t ref_size, uint32_t chunk_size);
 	// static inline void msgpack_vrefbuffer_free(msgpack_vrefbuffer* vbuf);
 
-	// static inline int msgpack_vrefbuffer_write(void* data, char8* buf, uint32 len);
+	// static inline int msgpack_vrefbuffer_write(void* data, char* buf, uint32_t len);
 
 	// static inline const msgpack_iovec* msgpack_vrefbuffer_vec(const msgpack_vrefbuffer* vref);
-	// static inline uint32 msgpack_vrefbuffer_veclen(const msgpack_vrefbuffer* vref);
+	// static inline uint32_t msgpack_vrefbuffer_veclen(const msgpack_vrefbuffer* vref);
 
-	[CLink] public static extern int msgpack_vrefbuffer_append_copy(msgpack_vrefbuffer* vbuf, char8* buf, uint32 len);
+	[CLink] public static extern int msgpack_vrefbuffer_append_copy(msgpack_vrefbuffer* vbuf, char* buf, uint32_t len);
 
-	[CLink] public static extern int msgpack_vrefbuffer_append_ref(msgpack_vrefbuffer* vbuf, char8* buf, uint32 len);
+	[CLink] public static extern int msgpack_vrefbuffer_append_ref(msgpack_vrefbuffer* vbuf, char* buf, uint32_t len);
 
 	[CLink] public static extern int msgpack_vrefbuffer_migrate(msgpack_vrefbuffer* vbuf, msgpack_vrefbuffer* to);
 

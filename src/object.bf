@@ -21,7 +21,7 @@ extension msgpackc
 	* @{
 	*/
 	[AllowDuplicates]
-	public enum msgpack_object_type
+	public enum msgpack_object_type : c_int
 	{
 		MSGPACK_OBJECT_NIL                  = 0x00,
 		MSGPACK_OBJECT_BOOLEAN              = 0x01,
@@ -43,45 +43,45 @@ extension msgpackc
 	[CRepr]
 	public struct msgpack_object_array
 	{
-		uint32 size;
+		uint32_t size;
 		msgpack_object* ptr;
 	}
 
 	[CRepr]
 	public struct msgpack_object_map
 	{
-		uint32 size;
+		uint32_t size;
 		msgpack_object_kv* ptr;
 	}
 
 	[CRepr]
 	public struct msgpack_object_str
 	{
-		uint32 size;
-		char8* ptr;
+		uint32_t size;
+		char* ptr;
 	}
 
 	[CRepr]
 	public struct msgpack_object_bin
 	{
-		uint32 size;
-		char8* ptr;
+		uint32_t size;
+		char* ptr;
 	}
 
 	[CRepr]
 	public struct msgpack_object_ext
 	{
-		int8 type;
-		uint32 size;
-		char8* ptr;
+		int8_t type;
+		uint32_t size;
+		char* ptr;
 	}
 
 	[Union, CRepr]
 	public struct msgpack_object_union
 	{
 		bool boolean;
-		uint64 u64;
-		int64 i64;
+		uint64_t u64;
+		int64_t i64;
 	#if MSGPACK_USE_LEGACY_NAME_AS_FLOAT
 		double dec; /* obsolete*/
 	#endif /* MSGPACK_USE_LEGACY_NAME_AS_FLOAT */
@@ -112,23 +112,23 @@ extension msgpackc
 
 	[CLink] public static extern  void msgpack_object_init_boolean(msgpack_object* d, bool v);
 
-	[CLink] public static extern  void msgpack_object_init_unsigned_integer(msgpack_object* d, uint64 v);
+	[CLink] public static extern  void msgpack_object_init_unsigned_integer(msgpack_object* d, uint64_t v);
 
-	[CLink] public static extern  void msgpack_object_init_signed_integer(msgpack_object* d, int64 v);
+	[CLink] public static extern  void msgpack_object_init_signed_integer(msgpack_object* d, int64_t v);
 
 	[CLink] public static extern  void msgpack_object_init_float32(msgpack_object* d, float v);
 
 	[CLink] public static extern  void msgpack_object_init_float64(msgpack_object* d, double v);
 
-	[CLink] public static extern  void msgpack_object_init_str(msgpack_object* d, char8* data, uint32 size);
+	[CLink] public static extern  void msgpack_object_init_str(msgpack_object* d, char* data, uint32_t size);
 
-	[CLink] public static extern  void msgpack_object_init_bin(msgpack_object* d, char8* data, uint32 size);
+	[CLink] public static extern  void msgpack_object_init_bin(msgpack_object* d, char* data, uint32_t size);
 
-	[CLink] public static extern  void msgpack_object_init_ext(msgpack_object* d, int8 type, char8* data, uint32 size);
+	[CLink] public static extern  void msgpack_object_init_ext(msgpack_object* d, int8_t type, char* data, uint32_t size);
 
-	[CLink] public static extern  void msgpack_object_init_array(msgpack_object* d, msgpack_object* data, uint32 size);
+	[CLink] public static extern  void msgpack_object_init_array(msgpack_object* d, msgpack_object* data, uint32_t size);
 
-	[CLink] public static extern  void msgpack_object_init_map(msgpack_object* d, msgpack_object_kv* data, uint32 size);
+	[CLink] public static extern  void msgpack_object_init_map(msgpack_object* d, msgpack_object_kv* data, uint32_t size);
 
 #if !_KERNEL_MODE
 	public struct FILE;
@@ -136,7 +136,7 @@ extension msgpackc
 	[CLink] public static extern  void msgpack_object_print(FILE* out_file, msgpack_object o);
 #endif
 
-	[CLink] public static extern  int msgpack_object_print_buffer(char8* buffer, uint32 buffer_size, msgpack_object o);
+	[CLink] public static extern  int msgpack_object_print_buffer(char* buffer, uint32_t buffer_size, msgpack_object o);
 
 	[CLink] public static extern  bool msgpack_object_equal(msgpack_object x, msgpack_object y);
 }

@@ -15,11 +15,11 @@ namespace msgpackc_Beef;
 
 extension msgpackc
 {
-	[CLink] public static extern char8* msgpack_version();
+	[CLink] public static extern char* msgpack_version();
 
-	[CLink] public static extern int msgpack_version_major();
+	[CLink] public static extern c_int msgpack_version_major();
 
-	[CLink] public static extern int msgpack_version_minor();
+	[CLink] public static extern c_int msgpack_version_minor();
 
-	[CLink] public static extern int msgpack_version_revision();
+	[CLink] public static extern c_int msgpack_version_revision();
 }

@@ -28,7 +28,7 @@ extension msgpackc
 		public msgpack_object data;
 	}
 
-	public enum msgpack_unpack_return
+	public enum msgpack_unpack_return : c_int
 	{
 		MSGPACK_UNPACK_SUCCESS              =  2,
 		MSGPACK_UNPACK_EXTRA_BYTES          =  1,
@@ -37,7 +37,7 @@ extension msgpackc
 		MSGPACK_UNPACK_NOMEM_ERROR          = -2
 	}
 
-	[CLink] public static extern msgpack_unpack_return msgpack_unpack_next(msgpack_unpacked* result, char8* data, uint32 len, uint32* off);
+	[CLink] public static extern msgpack_unpack_return msgpack_unpack_next(msgpack_unpacked* result, char* data, uint32_t len, uint32_t* off);
 
 	/**
 	* @defgroup msgpack_unpacker Streaming deserializer
@@ -48,13 +48,13 @@ extension msgpackc
 	[CRepr]
 	public struct msgpack_unpacker
 	{
-		char8* buffer;
-		uint32 used;
-		uint32 free;
-		uint32 off;
-		uint32 parsed;
+		char* buffer;
+		uint32_t used;
+		uint32_t free;
+		uint32_t off;
+		uint32_t parsed;
 		msgpack_zone* z;
-		uint32 initial_buffer_size;
+		uint32_t initial_buffer_size;
 		void* ctx;
 	}
 
@@ -67,10 +67,10 @@ extension msgpackc
 	* Initializes a streaming deserializer.
 	* The initialized deserializer must be destroyed by msgpack_unpacker_destroy(msgpack_unpacker*).
 	*/
-	[CLink] public static extern bool msgpack_unpacker_init(msgpack_unpacker* mpac, uint32 initial_buffer_size);
+	[CLink] public static extern bool msgpack_unpacker_init(msgpack_unpacker* mpac, uint32_t initial_buffer_size);
 
 	/**
-	* Destroys a streaming deserializer initialized by msgpack_unpacker_init(msgpack_unpacker*, uint32).
+	* Destroys a streaming deserializer initialized by msgpack_unpacker_init(msgpack_unpacker*, uint32_t).
 	*/
 	[CLink] public static extern void msgpack_unpacker_destroy(msgpack_unpacker* mpac);
 
@@ -78,10 +78,10 @@ extension msgpackc
 	* Creates a streaming deserializer.
 	* The created deserializer must be destroyed by msgpack_unpacker_free(msgpack_unpacker*).
 	*/
-	[CLink] public static extern msgpack_unpacker* msgpack_unpacker_new(uint32 initial_buffer_size);
+	[CLink] public static extern msgpack_unpacker* msgpack_unpacker_new(uint32_t initial_buffer_size);
 
 	/**
-	* Frees a streaming deserializer created by msgpack_unpacker_new(uint32).
+	* Frees a streaming deserializer created by msgpack_unpacker_new(uint32_t).
 	*/
 	[CLink] public static extern void msgpack_unpacker_free(msgpack_unpacker* mpac);
 
@@ -97,34 +97,34 @@ extension msgpackc
 	* msgpack_unpacker_buffer_capacity(msgpack_unpacker*) and
 	* msgpack_unpacker_buffer_consumed(msgpack_unpacker*).
 	*/
-	[CLink] public static extern bool msgpack_unpacker_reserve_buffer(msgpack_unpacker* mpac, uint32 size);
+	[CLink] public static extern bool msgpack_unpacker_reserve_buffer(msgpack_unpacker* mpac, uint32_t size);
 
 	/**
 	* Gets pointer to the free space of the internal buffer.
 	* Use this function to fill the internal buffer with
-	* msgpack_unpacker_reserve_buffer(msgpack_unpacker*, uint32),
+	* msgpack_unpacker_reserve_buffer(msgpack_unpacker*, uint32_t),
 	* msgpack_unpacker_buffer_capacity(msgpack_unpacker*) and
 	* msgpack_unpacker_buffer_consumed(msgpack_unpacker*).
 	*/
-	[CLink] public static extern char8* msgpack_unpacker_buffer(msgpack_unpacker* mpac);
+	[CLink] public static extern char* msgpack_unpacker_buffer(msgpack_unpacker* mpac);
 
 	/**
 	* Gets size of the free space of the internal buffer.
 	* Use this function to fill the internal buffer with
-	* msgpack_unpacker_reserve_buffer(msgpack_unpacker*, uint32),
+	* msgpack_unpacker_reserve_buffer(msgpack_unpacker*, uint32_t),
 	* msgpack_unpacker_buffer(msgpack_unpacker*) and
 	* msgpack_unpacker_buffer_consumed(msgpack_unpacker*).
 	*/
-	[CLink] public static extern uint32 msgpack_unpacker_buffer_capacity(msgpack_unpacker* mpac);
+	[CLink] public static extern uint32_t msgpack_unpacker_buffer_capacity(msgpack_unpacker* mpac);
 
 	/**
 	* Notifies the deserializer that the internal buffer filled.
 	* Use this function to fill the internal buffer with
-	* msgpack_unpacker_reserve_buffer(msgpack_unpacker*, uint32),
+	* msgpack_unpacker_reserve_buffer(msgpack_unpacker*, uint32_t),
 	* msgpack_unpacker_buffer(msgpack_unpacker*) and
 	* msgpack_unpacker_buffer_capacity(msgpack_unpacker*).
 	*/
-	[CLink] public static extern void msgpack_unpacker_buffer_consumed(msgpack_unpacker* mpac, uint32 size);
+	[CLink] public static extern void msgpack_unpacker_buffer_consumed(msgpack_unpacker* mpac, uint32_t size);
 
 
 	/**
@@ -141,13 +141,13 @@ extension msgpackc
 	* @param result  pointer to an initialized msgpack_unpacked object.
 	* @param p_bytes pointer to variable that will be set with the number of parsed bytes.
 	*/
-	[CLink] public static extern msgpack_unpack_return msgpack_unpacker_next_with_size(msgpack_unpacker* mpac, msgpack_unpacked* result, uint32* p_bytes);
+	[CLink] public static extern msgpack_unpack_return msgpack_unpacker_next_with_size(msgpack_unpacker* mpac, msgpack_unpacked* result, uint32_t* p_bytes);
 
 	/**
 	* Initializes a msgpack_unpacked object.
 	* The initialized object must be destroyed by msgpack_unpacked_destroy(msgpack_unpacker*).
 	* Use the object with msgpack_unpacker_next(msgpack_unpacker*, msgpack_unpacked*) or
-	* msgpack_unpack_next(msgpack_unpacked*, char8*, uint32, uint32*).
+	* msgpack_unpack_next(msgpack_unpacked*, char*, uint32_t, uint32_t*).
 	*/
 	[CLink] public static extern void msgpack_unpacked_init(msgpack_unpacked* result);
 
@@ -172,16 +172,16 @@ extension msgpackc
 
 	[CLink] public static extern void msgpack_unpacker_reset(msgpack_unpacker* mpac);
 
-	[CLink] public static extern uint32 msgpack_unpacker_message_size(msgpack_unpacker* mpac);
+	[CLink] public static extern uint32_t msgpack_unpacker_message_size(msgpack_unpacker* mpac);
 
 	[Obsolete]
-	[CLink] public static extern msgpack_unpack_return msgpack_unpack(char8* data, uint32 len, uint32* off, msgpack_zone* result_zone, msgpack_object* result);
+	[CLink] public static extern msgpack_unpack_return msgpack_unpack(char* data, uint32_t len, uint32_t* off, msgpack_zone* result_zone, msgpack_object* result);
 
-	[CLink] public static extern uint32 msgpack_unpacker_parsed_size(msgpack_unpacker* mpac);
+	[CLink] public static extern uint32_t msgpack_unpacker_parsed_size(msgpack_unpacker* mpac);
 
 	[CLink] public static extern bool msgpack_unpacker_flush_zone(msgpack_unpacker* mpac);
 
-	[CLink] public static extern bool msgpack_unpacker_expand_buffer(msgpack_unpacker* mpac, uint32 size);
+	[CLink] public static extern bool msgpack_unpacker_expand_buffer(msgpack_unpacker* mpac, uint32_t size);
 
 
 
